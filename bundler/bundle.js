@@ -113,9 +113,10 @@ function run(input, output) {
 			.replace(/;+(\r|\n|$)/g, ";$1") // remove redundant semicolons
 			.replace(/(\r|\n)+/g, "\n").replace(/(\r|\n)$/, "") // remove multiline breaks
 			.replace(versionTag, isFile(packageFile) ? parse(packageFile).version : versionTag) // set version
-		
+      .replace(/if \(typeof module !== .undefined.\) module\[.exports.\] = m\nelse window\.m = m/, 'return m')
+
     // put in hook to replace the common.js export and the window mounting to just return the module!
-    code = "export default function() {\n" + code + "\n}();"
+    code = "export default const m = (function() {\n" + code + "\n})();"
     // code = ";(function() {\n" + code + "\n}());"
 		
 		if (!isFile(output) || code !== read(output)) {
