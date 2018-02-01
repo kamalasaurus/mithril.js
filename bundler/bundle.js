@@ -116,8 +116,7 @@ function run(input, output) {
       .replace(/if \(typeof module !== .undefined.\) module\[.exports.\] = m\nelse window\.m = m/, 'return m')
 
     // put in hook to replace the common.js export and the window mounting to just return the module!
-    code = "export default const m = (function() {\n" + code + "\n})();"
-
+    code = "export default (function() {\n" + code + "\n})();"
     // code = ";(function() {\n" + code + "\n}());"
 		
 		if (!isFile(output) || code !== read(output)) {
