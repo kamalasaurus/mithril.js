@@ -117,6 +117,7 @@ function run(input, output) {
 
     // put in hook to replace the common.js export and the window mounting to just return the module!
     code = "export default const m = (function() {\n" + code + "\n})();"
+
     // code = ";(function() {\n" + code + "\n}());"
 		
 		if (!isFile(output) || code !== read(output)) {
