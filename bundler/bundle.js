@@ -114,7 +114,9 @@ function run(input, output) {
 			.replace(/(\r|\n)+/g, "\n").replace(/(\r|\n)$/, "") // remove multiline breaks
 			.replace(versionTag, isFile(packageFile) ? parse(packageFile).version : versionTag) // set version
 		
-		code = ";(function() {\n" + code + "\n}());"
+    // put in hook to replace the common.js export and the window mounting to just return the module!
+    code = "export default function() {\n" + code + "\n}();"
+    // code = ";(function() {\n" + code + "\n}());"
 		
 		if (!isFile(output) || code !== read(output)) {
 			//try {new Function(code); console.log("build completed at " + new Date())} catch (e) {}
